@@ -3,7 +3,7 @@ _base_ = [
     '../common/standard_512x512_40k_levircd.py']
 
 crop_size = (512, 512)
-
+#hello world
 checkpoint = 'https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segformer/mit_b0_20220624-7e0fe6dd.pth'  # noqa
 
 model = dict(
