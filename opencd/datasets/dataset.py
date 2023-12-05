@@ -8,7 +8,7 @@ class Dataset(_BaseCDDataset):
     """dataset"""
     METAINFO = dict(
         classes=('unchanged', 'changed'),
-        palette=[[0, 0, 0, 0, 0, 0], [255, 255, 255, 255, 255, 255]])
+        palette=[[0, 0, 0], [255, 255, 255]])
 
     def __init__(self,
                  img_suffix='.tif',

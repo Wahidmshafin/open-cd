@@ -1,5 +1,3 @@
-_base_ = '../_base_/default_runtime.py'
-
 dataset_type = 'Dataset'
 data_root = 'data/dataset'
 
@@ -21,16 +19,16 @@ train_pipeline = [
     dict(type='MultiImgPackSegInputs')
 ]
 test_pipeline = [
-    dict(type='MultiImgLoadImageTIF'),
+    dict(type='MultiImgLoadImageFromFile'),
     dict(type='MultiImgResize', scale=(1024, 1024), keep_ratio=True),
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
-    dict(type='MultiImgLoadAnnotationsGray'),
+    dict(type='MultiImgLoadAnnotations'),
     dict(type='MultiImgPackSegInputs')
 ]
 img_ratios = [0.75, 1.0, 1.25]
 tta_pipeline = [
-    dict(type='MultiImgLoadImageTIF', backend_args=None),
+    dict(type='MultiImgLoadImageFromFile', backend_args=None),
     dict(
         type='TestTimeAug',
         transforms=[
@@ -42,7 +40,7 @@ tta_pipeline = [
                 dict(type='MultiImgRandomFlip', prob=0., direction='horizontal'),
                 dict(type='MultiImgRandomFlip', prob=1., direction='horizontal')
             ],
-            [dict(type='MultiImgLoadAnnotationsGray')],
+            [dict(type='MultiImgLoadAnnotations')],
             [dict(type='MultiImgPackSegInputs')]
         ])
 ]
