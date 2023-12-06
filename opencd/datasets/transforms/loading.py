@@ -59,6 +59,8 @@ class MultiImgLoadImageFromFile(MMCV_LoadImageFromFile):
                 img_bytes, flag=self.color_type, backend=self.imdecode_backend)
                 if self.to_float32:
                     img = img.astype(np.float32)
+                ##############
+                print(img.shape)
                 imgs.append(img)
         except Exception as e:
             if self.ignore_empty:
@@ -103,7 +105,6 @@ class MultiImgLoadImageTIF(MMCV_LoadImageFromFile):
         """
 
         filenames = results['img_path']
-        #print("HelpME", filenames)
         imgs = []
         try:
             for filename in filenames:
@@ -112,6 +113,8 @@ class MultiImgLoadImageTIF(MMCV_LoadImageFromFile):
                   [1,2,3,4,8,9])
                 if self.to_float32:
                     img = img.astype(np.float32)
+                img = img.transpose((1,2,0))
+                #print(img.shape)
                 imgs.append(img)
         except Exception as e:
             if self.ignore_empty:
@@ -326,10 +329,8 @@ class MultiImgLoadAnnotationsGray(MMCV_LoadAnnotations):
         Returns:
             dict: The dict contains loaded semantic segmentation annotations.
         """
-        print("oK Broo",results['seg_map_path'])
-        
         gt_semantic_seg = io.imread(results['seg_map_path'], as_gray=True) != 0
-
+        gt_semantic_seg = gt_semantic_seg.astype(np.uint8)
         # reduce zero_label
         if self.reduce_zero_label is None:
             self.reduce_zero_label = results['reduce_zero_label']
