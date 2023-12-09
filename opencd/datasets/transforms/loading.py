@@ -59,8 +59,6 @@ class MultiImgLoadImageFromFile(MMCV_LoadImageFromFile):
                 img_bytes, flag=self.color_type, backend=self.imdecode_backend)
                 if self.to_float32:
                     img = img.astype(np.float32)
-                ##############
-                print(img.shape)
                 imgs.append(img)
         except Exception as e:
             if self.ignore_empty:
