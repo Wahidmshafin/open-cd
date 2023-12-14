@@ -108,7 +108,7 @@ class MultiImgLoadImageTIF(MMCV_LoadImageFromFile):
             for filename in filenames:
                 raster = rasterio.open(filename, "r", driver="GTiff", count=9, nodata=0)
                 img = raster.read(
-                  [1,2,3])
+                  [8,3,2])
                 if self.to_float32:
                     img = img.astype(np.float32)
                 img = img.transpose((1,2,0))

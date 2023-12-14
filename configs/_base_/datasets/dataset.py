@@ -1,12 +1,12 @@
 dataset_type = 'Dataset'
 data_root = 'data/dataset'
 
-crop_size = (128, 128)
+crop_size = (183, 183)
 train_pipeline = [
     dict(type='MultiImgLoadImageTIF'),
     dict(type='MultiImgLoadAnnotationsGray'),
     dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
-    dict(type='MultiImgRandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
+    #dict(type='MultiImgRandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
     # dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
     # dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
     # dict(type='MultiImgExchangeTime', prob=0.5),
