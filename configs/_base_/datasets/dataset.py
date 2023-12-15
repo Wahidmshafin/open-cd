@@ -1,5 +1,5 @@
 dataset_type = 'Dataset'
-data_root = 'data/dataset'
+data_root = 'dataset'
 
 crop_size = (183, 183)
 train_pipeline = [
@@ -19,28 +19,28 @@ train_pipeline = [
     dict(type='MultiImgPackSegInputs')
 ]
 test_pipeline = [
-    dict(type='MultiImgLoadImageFromFile'),
-    dict(type='MultiImgResize', scale=(1024, 1024), keep_ratio=True),
+    dict(type='MultiImgLoadImageTIF'),
+    #dict(type='MultiImgResize', scale=(1024, 1024), keep_ratio=True),
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
-    dict(type='MultiImgLoadAnnotations'),
+    dict(type='MultiImgLoadAnnotationsGray'),
     dict(type='MultiImgPackSegInputs')
 ]
 img_ratios = [0.75, 1.0, 1.25]
 tta_pipeline = [
-    dict(type='MultiImgLoadImageFromFile', backend_args=None),
+    dict(type='MultiImgLoadImageTIF', backend_args=None),
     dict(
         type='TestTimeAug',
         transforms=[
-            [
-                dict(type='MultiImgResize', scale_factor=r, keep_ratio=True)
-                for r in img_ratios
-            ],
-            [
-                dict(type='MultiImgRandomFlip', prob=0., direction='horizontal'),
-                dict(type='MultiImgRandomFlip', prob=1., direction='horizontal')
-            ],
-            [dict(type='MultiImgLoadAnnotations')],
+            # [
+            #     dict(type='MultiImgResize', scale_factor=r, keep_ratio=True)
+            #     for r in img_ratios
+            # ],
+            # [
+            #     dict(type='MultiImgRandomFlip', prob=0., direction='horizontal'),
+            #     dict(type='MultiImgRandomFlip', prob=1., direction='horizontal')
+            # ],
+            [dict(type='MultiImgLoadAnnotationsGray')],
             [dict(type='MultiImgPackSegInputs')]
         ])
 ]

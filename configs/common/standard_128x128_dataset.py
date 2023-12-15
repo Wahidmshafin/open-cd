@@ -1,7 +1,7 @@
 _base_ = '../_base_/default_runtime.py'
 
 dataset_type = 'Dataset'
-data_root = 'data/dataset'
+data_root = 'dataset'
 
 crop_size = (183, 183)
 train_pipeline = [
@@ -34,14 +34,14 @@ tta_pipeline = [
     dict(
         type='TestTimeAug',
         transforms=[
-            [
-                dict(type='MultiImgResize', scale_factor=r, keep_ratio=True)
-                for r in img_ratios
-            ],
-            [
-                dict(type='MultiImgRandomFlip', prob=0., direction='horizontal'),
-                dict(type='MultiImgRandomFlip', prob=1., direction='horizontal')
-            ],
+            # [
+            #     dict(type='MultiImgResize', scale_factor=r, keep_ratio=True)
+            #     for r in img_ratios
+            # ],
+            # [
+            #     dict(type='MultiImgRandomFlip', prob=0., direction='horizontal'),
+            #     dict(type='MultiImgRandomFlip', prob=1., direction='horizontal')
+            # ],
             [dict(type='MultiImgLoadAnnotationsGray')],
             [dict(type='MultiImgPackSegInputs')]
         ])
@@ -103,7 +103,7 @@ param_scheduler = [
         type='PolyLR',
         power=1.0,
         begin=1000,
-        end=40000,
+        end=10000,
         eta_min=0.0,
         by_epoch=False,
     )
