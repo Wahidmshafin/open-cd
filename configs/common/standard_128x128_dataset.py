@@ -6,18 +6,18 @@ data_root = 'dataset'
 crop_size = (183, 183)
 train_pipeline = [
     dict(type='MultiImgLoadImageTIF'),
-    dict(type='MultiImgLoadAnnotationsGray'),
+    dict(type='MultiImgLoadAnnotations'),
     dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
     #dict(type='MultiImgRandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
-    # dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
-    # dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
-    # dict(type='MultiImgExchangeTime', prob=0.5),
-    # dict(
-    #     type='MultiImgPhotoMetricDistortion',
-    #     brightness_delta=10,
-    #     contrast_range=(0.8, 1.2),
-    #     saturation_range=(0.8, 1.2),
-    #     hue_delta=10),
+    dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
+    dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
+    dict(type='MultiImgExchangeTime', prob=0.5),
+    dict(
+        type='MultiImgPhotoMetricDistortion',
+        brightness_delta=10,
+        contrast_range=(0.8, 1.2),
+        saturation_range=(0.8, 1.2),
+        hue_delta=10),
     dict(type='MultiImgPackSegInputs')
 ]
 test_pipeline = [
@@ -25,7 +25,7 @@ test_pipeline = [
     #dict(type='MultiImgResize', scale=(1024, 1024), keep_ratio=True),
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
-    dict(type='MultiImgLoadAnnotationsGray'),
+    dict(type='MultiImgLoadAnnotations'),
     dict(type='MultiImgPackSegInputs')
 ]
 img_ratios = [0.75, 1.0, 1.25]
@@ -34,15 +34,15 @@ tta_pipeline = [
     dict(
         type='TestTimeAug',
         transforms=[
-            # [
-            #     dict(type='MultiImgResize', scale_factor=r, keep_ratio=True)
-            #     for r in img_ratios
-            # ],
-            # [
-            #     dict(type='MultiImgRandomFlip', prob=0., direction='horizontal'),
-            #     dict(type='MultiImgRandomFlip', prob=1., direction='horizontal')
-            # ],
-            [dict(type='MultiImgLoadAnnotationsGray')],
+            [
+                dict(type='MultiImgResize', scale_factor=r, keep_ratio=True)
+                for r in img_ratios
+            ],
+            [
+                dict(type='MultiImgRandomFlip', prob=0., direction='horizontal'),
+                dict(type='MultiImgRandomFlip', prob=1., direction='horizontal')
+            ],
+            [dict(type='MultiImgLoadAnnotations')],
             [dict(type='MultiImgPackSegInputs')]
         ])
 ]
@@ -119,4 +119,4 @@ default_hooks = dict(
     param_scheduler=dict(type='ParamSchedulerHook'),
     checkpoint=dict(type='CheckpointHook', by_epoch=False, interval=1000),
     sampler_seed=dict(type='DistSamplerSeedHook'),
-    visualization=dict(type='CDVisualizationHook', interval=1, draw_on_from_to_img =True))
+    visualization=dict(type='CDVisualizationHook', interval=1))
