@@ -118,4 +118,4 @@ default_hooks = dict(
                     save_best='mIoU'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
     visualization=dict(type='CDVisualizationHook', interval=1, 
-                       img_shape=(1024, 1024, 3)))
+                       img_shape=(1024, 1024, 3), draw=True))

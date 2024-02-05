@@ -30,7 +30,7 @@ class CDVisualizationHook(SegVisualizationHook):
     def __init__(self,
                  img_shape: tuple = None,
                  draw_on_from_to_img: bool = False,
-                 draw: bool = False,
+                 draw: bool = True,
                  interval: int = 50,
                  show: bool = False,
                  wait_time: float = 0.,
