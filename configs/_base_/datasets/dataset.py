@@ -3,7 +3,7 @@ data_root = 'dataset'
 
 crop_size = (183, 183)
 train_pipeline = [
-    dict(type='MultiImgLoadImageTIF'),
+    dict(type='MultiImgLoadImageFromFile'),
     dict(type='MultiImgLoadAnnotationsGray'),
     dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
     #dict(type='MultiImgRandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
@@ -19,7 +19,7 @@ train_pipeline = [
     dict(type='MultiImgPackSegInputs')
 ]
 test_pipeline = [
-    dict(type='MultiImgLoadImageTIF'),
+    dict(type='MultiImgLoadImageFromFile'),
     #dict(type='MultiImgResize', scale=(1024, 1024), keep_ratio=True),
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
@@ -28,7 +28,7 @@ test_pipeline = [
 ]
 img_ratios = [0.75, 1.0, 1.25]
 tta_pipeline = [
-    dict(type='MultiImgLoadImageTIF', backend_args=None),
+    dict(type='MultiImgLoadImageFromFile', backend_args=None),
     dict(
         type='TestTimeAug',
         transforms=[
