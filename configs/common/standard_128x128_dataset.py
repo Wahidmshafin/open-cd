@@ -7,17 +7,17 @@ crop_size = (183, 183)
 train_pipeline = [
     dict(type='MultiImgLoadImageFromFile'),
     dict(type='MultiImgLoadAnnotations'),
-    dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
-    #dict(type='MultiImgRandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
-    dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
-    dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
-    dict(type='MultiImgExchangeTime', prob=0.5),
-    dict(
-        type='MultiImgPhotoMetricDistortion',
-        brightness_delta=10,
-        contrast_range=(0.8, 1.2),
-        saturation_range=(0.8, 1.2),
-        hue_delta=10),
+    # dict(type='MultiImgRandomRotate', prob=0.5, degree=180),
+    # #dict(type='MultiImgRandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
+    # dict(type='MultiImgRandomFlip', prob=0.5, direction='horizontal'),
+    # dict(type='MultiImgRandomFlip', prob=0.5, direction='vertical'),
+    # dict(type='MultiImgExchangeTime', prob=0.5),
+    # dict(
+    #     type='MultiImgPhotoMetricDistortion',
+    #     brightness_delta=10,
+    #     contrast_range=(0.8, 1.2),
+    #     saturation_range=(0.8, 1.2),
+    #     hue_delta=10),
     dict(type='MultiImgPackSegInputs')
 ]
 test_pipeline = [
@@ -34,14 +34,14 @@ tta_pipeline = [
     dict(
         type='TestTimeAug',
         transforms=[
-            [
-                dict(type='MultiImgResize', scale_factor=r, keep_ratio=True)
-                for r in img_ratios
-            ],
-            [
-                dict(type='MultiImgRandomFlip', prob=0., direction='horizontal'),
-                dict(type='MultiImgRandomFlip', prob=1., direction='horizontal')
-            ],
+            # [
+            #     dict(type='MultiImgResize', scale_factor=r, keep_ratio=True)
+            #     for r in img_ratios
+            # ],
+            # [
+            #     dict(type='MultiImgRandomFlip', prob=0., direction='horizontal'),
+            #     dict(type='MultiImgRandomFlip', prob=1., direction='horizontal')
+            # ],
             [dict(type='MultiImgLoadAnnotations')],
             [dict(type='MultiImgPackSegInputs')]
         ])
@@ -63,7 +63,7 @@ val_dataloader = dict(
     batch_size=1,
     num_workers=4,
     persistent_workers=True,
-    sampler=dict(type='DefaultSampler', shuffle=False),
+    sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
@@ -76,7 +76,7 @@ test_dataloader = dict(
     batch_size=1,
     num_workers=4,
     persistent_workers=True,
-    sampler=dict(type='DefaultSampler', shuffle=False),
+    sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
@@ -117,6 +117,6 @@ default_hooks = dict(
     timer=dict(type='IterTimerHook'),
     logger=dict(type='LoggerHook', interval=50, log_metric_by_epoch=False),
     param_scheduler=dict(type='ParamSchedulerHook'),
-    checkpoint=dict(type='CheckpointHook', by_epoch=False, interval=1000),
+    checkpoint=dict(type='CheckpointHook', by_epoch=False, interval=1000, save_best='mIoU'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
-    visualization=dict(type='CDVisualizationHook', interval=1))
+    visualization=dict(type='CDVisualizationHook', interval=1, img_shape=(1024, 1024, 3)))
