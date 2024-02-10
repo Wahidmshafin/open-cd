@@ -61,7 +61,7 @@ def trigger_visualization_hook(cfg, args):
         # Turn on visualization
         visualization_hook['draw'] = True
         if args.show:
-            visualization_hook['show'] = True
+            visualization_hook['show'] = False
             visualization_hook['wait_time'] = args.wait_time
         if args.show_dir:
             visulizer = cfg.visualizer
