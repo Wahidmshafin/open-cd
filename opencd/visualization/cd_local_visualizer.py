@@ -82,7 +82,7 @@ class CDLocalVisualizer(SegLocalVisualizer):
                                         'deteaction results.'
             gt_img_data = self._draw_sem_seg(gt_img_data,
                                              data_sample.gt_sem_seg, classes,
-                                             palette)
+                                             palette,with_labels=False)
         if draw_gt and data_sample is not None and 'gt_sem_seg_from' in data_sample \
             and 'gt_sem_seg_to' in data_sample:
             if exist_img_from_to:
@@ -97,10 +97,10 @@ class CDLocalVisualizer(SegLocalVisualizer):
                                         'deteaction results.'
             gt_img_data_from = self._draw_sem_seg(gt_img_data_from,
                                              data_sample.gt_sem_seg_from, semantic_classes,
-                                             semantic_palette)
+                                             semantic_palette,with_labels=False)
             gt_img_data_to = self._draw_sem_seg(gt_img_data_to,
                                              data_sample.gt_sem_seg_to, semantic_classes,
-                                             semantic_palette)
+                                             semantic_palette,with_labels=False)
 
         if (draw_pred and data_sample is not None
                 and 'pred_sem_seg' in data_sample):
@@ -111,7 +111,7 @@ class CDLocalVisualizer(SegLocalVisualizer):
                                         'segmentation results.'
             pred_img_data = self._draw_sem_seg(pred_img_data,
                                                data_sample.pred_sem_seg,
-                                               classes, palette)
+                                               classes, palette, with_labels=False)
             
         if (draw_pred and data_sample is not None and 'pred_sem_seg_from' in data_sample \
             and 'pred_sem_seg_to' in data_sample):
@@ -127,10 +127,10 @@ class CDLocalVisualizer(SegLocalVisualizer):
                                         'deteaction results.'
             pred_img_data_from = self._draw_sem_seg(pred_img_data_from,
                                              data_sample.pred_sem_seg_from, semantic_classes,
-                                             semantic_palette)
+                                             semantic_palette, with_labels=False)
             pred_img_data_to = self._draw_sem_seg(pred_img_data_to,
                                              data_sample.pred_sem_seg_to, semantic_classes,
-                                             semantic_palette)
+                                             semantic_palette, with_labels=False)
 
         if gt_img_data is not None and pred_img_data is not None:
             drawn_img = np.concatenate((gt_img_data, pred_img_data), axis=1)

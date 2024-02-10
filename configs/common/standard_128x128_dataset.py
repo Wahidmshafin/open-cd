@@ -105,6 +105,7 @@ param_scheduler = [
         begin=1000,
         end=10000,
         eta_min=0.0,
+        
         by_epoch=False,
     )
 ]
@@ -119,4 +120,4 @@ default_hooks = dict(
     param_scheduler=dict(type='ParamSchedulerHook'),
     checkpoint=dict(type='CheckpointHook', by_epoch=False, interval=1000, save_best='mIoU'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
-    visualization=dict(type='CDVisualizationHook', interval=1, img_shape=(1024, 1024, 3)))
+    visualization=dict(type='CDVisualizationHook', interval=1, img_shape=(183, 183, 3)))
