@@ -1,6 +1,6 @@
 _base_ = [
     '../_base_/models/changer_s50.py', 
-    '../common/standard_512x512_40k_levircd.py']
+    '../common/standard_128x128_dataset.py']
 
 crop_size = (183, 183)
 model = dict(
