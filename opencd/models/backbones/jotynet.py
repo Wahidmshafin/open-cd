@@ -15,11 +15,11 @@ from opencd.registry import MODELS
 
 
 dim = 64
-kernel_size = (7,)
-num_heads = [4, 8, 16, 32]
-qkv_bias = True
-attn_drop = (0.0,)
-proj_drop = (0.0,)
+kernel_size = 7
+num_heads = 16
+qkv_bias = False
+attn_drop = 0.0
+proj_drop = 0.0
 
 
 class conv_block_nested(nn.Module):
